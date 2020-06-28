@@ -5,14 +5,20 @@ const ThemeContext = React.createContext();
 const FontContext = React.createContext();
 
 function ThemeButton() {
-  const theme = useContext(ThemeContext);
-  const font = useContext(FontContext);
   return (
-    <input
-      style={{ background: theme.background, fontStyle: font }}
-      type="button"
-      value="Context button"
-    />
+    <ThemeContext.Consumer>
+      {theme => (
+        <FontContext.Consumer>
+          {font => (
+            <input
+              style={{ background: theme.background, fontStyle: font }}
+              type="button"
+              value="Context button"
+            />
+          )}
+        </FontContext.Consumer>
+      )}
+    </ThemeContext.Consumer>
   );
 }
 function ThemeTitle() {
