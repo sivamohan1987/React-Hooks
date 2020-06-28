@@ -3,9 +3,20 @@ import { lightTheme, darkTheme } from "./theme";
 import "./styles.css";
 const ThemeContext = React.createContext();
 const FontContext = React.createContext();
+
 function ThemeButton() {
   const theme = useContext(ThemeContext);
   const font = useContext(FontContext);
+  return (
+    <input
+      style={{ background: theme.background, fontStyle: font }}
+      type="button"
+      value="Context button"
+    />
+  );
+}
+function ThemeTitle() {
+  const theme = useContext(ThemeContext);
   const [text, setText] = useState("");
   useEffect(() => {
     setText(theme.name);
@@ -16,11 +27,6 @@ function ThemeButton() {
       <br />
       Selected Theme : {text}
       <br />
-      <input
-        style={{ background: theme.background, fontStyle: font }}
-        type="button"
-        value="Context button"
-      />
     </>
   );
 }
@@ -29,7 +35,7 @@ function Container() {
   return (
     <FontContext.Provider value={fontStyle}>
       <div>
-        <label for="normal">Normal Font</label>
+        <label>Normal Font</label>
         <input
           type="radio"
           onChange={() => {
@@ -38,7 +44,7 @@ function Container() {
           name="fontStyle"
           checked={fontStyle == "normal"}
         />
-        <label for="normal">Italic Font</label>
+        <label>Italic Font</label>
         <input
           type="radio"
           onChange={() => {
@@ -48,6 +54,7 @@ function Container() {
           checked={fontStyle == "italic"}
         />
       </div>
+      <ThemeTitle />
       <ThemeButton />
     </FontContext.Provider>
   );
@@ -65,7 +72,7 @@ export default class Root extends React.Component {
       <ThemeContext.Provider value={this.state.selectedTheme}>
         <h1>Context Learning</h1>
         <div>
-          <label for="light">Light Theme</label>
+          <label>Light Theme</label>
           <input
             type="radio"
             onChange={() => {
@@ -74,7 +81,7 @@ export default class Root extends React.Component {
             name="theme"
             checked={this.state.selectedTheme == lightTheme}
           />
-          <label for="light">Dark Theme</label>
+          <label>Dark Theme</label>
           <input
             type="radio"
             onChange={() => {
